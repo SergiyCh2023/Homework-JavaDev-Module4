@@ -1,0 +1,1427 @@
+2023-06-04 15:48:55 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, (max(DATEDIFF('month', p.start_date, p.finish_date)) [*]AS MONTH_COUNT\000aFROM projects p\000aGROUP BY p.id\000aHAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (\000a  SELECT max(DATEDIFF('day', p2.start_date, p2.finish_date))\000a  FROM projects p2\000a);"; expected "FILTER ( WHERE, OVER, [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+SELECT p.id, (max(DATEDIFF('month', p.start_date, p.finish_date)) AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (
+  SELECT max(DATEDIFF('day', p2.start_date, p2.finish_date))
+  FROM projects p2
+); [42001-214]
+2023-06-04 15:54:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Function "YEAR_DIFF" not found; SQL statement:
+SELECT p.id, (YEAR_DIFF(p.finish_date, p.start_date) * 12) AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING YEAR_DIFF(p.finish_date, p.start_date) = (
+  SELECT YEAR_DIFF(p2.finish_date, p2.start_date)
+  FROM projects p2
+) [90022-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.Parser.readFunction(Parser.java:3894)
+	at org.h2.command.Parser.readTerm(Parser.java:5227)
+	at org.h2.command.Parser.readFactor(Parser.java:3440)
+	at org.h2.command.Parser.readSum(Parser.java:3427)
+	at org.h2.command.Parser.readConcat(Parser.java:3392)
+	at org.h2.command.Parser.readCondition(Parser.java:3177)
+	at org.h2.command.Parser.readExpression(Parser.java:3093)
+	at org.h2.command.Parser.readTerm(Parser.java:5021)
+	at org.h2.command.Parser.readFactor(Parser.java:3440)
+	at org.h2.command.Parser.readSum(Parser.java:3427)
+	at org.h2.command.Parser.readConcat(Parser.java:3392)
+	at org.h2.command.Parser.readCondition(Parser.java:3177)
+	at org.h2.command.Parser.readExpression(Parser.java:3093)
+	at org.h2.command.Parser.parseSelectExpressions(Parser.java:2893)
+	at org.h2.command.Parser.parseSelect(Parser.java:2910)
+	at org.h2.command.Parser.parseQueryPrimary(Parser.java:2800)
+	at org.h2.command.Parser.parseQueryTerm(Parser.java:2667)
+	at org.h2.command.Parser.parseQueryExpressionBody(Parser.java:2646)
+	at org.h2.command.Parser.parseQueryExpressionBodyAndEndOfQuery(Parser.java:2639)
+	at org.h2.command.Parser.parseQueryExpression(Parser.java:2632)
+	at org.h2.command.Parser.parseQuery(Parser.java:2593)
+	at org.h2.command.Parser.parsePrepared(Parser.java:724)
+	at org.h2.command.Parser.parse(Parser.java:691)
+	at org.h2.command.Parser.parse(Parser.java:661)
+	at org.h2.command.Parser.prepareCommand(Parser.java:568)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:631)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:554)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1116)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:237)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-06-04 15:58:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Function "PERIOD_DIFF" not found; SQL statement:
+SELECT p.id, 
+       PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM p.finish_date), EXTRACT(YEAR_MONTH FROM p.start_date)) AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM p.finish_date), EXTRACT(YEAR_MONTH FROM p.start_date)) = (
+  SELECT PERIOD_DIFF(EXTRACT(YEAR_MONTH FROM p2.finish_date), EXTRACT(YEAR_MONTH FROM p2.start_date))
+  FROM projects p2
+) [90022-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.Parser.readFunction(Parser.java:3894)
+	at org.h2.command.Parser.readTerm(Parser.java:5227)
+	at org.h2.command.Parser.readFactor(Parser.java:3440)
+	at org.h2.command.Parser.readSum(Parser.java:3427)
+	at org.h2.command.Parser.readConcat(Parser.java:3392)
+	at org.h2.command.Parser.readCondition(Parser.java:3177)
+	at org.h2.command.Parser.readExpression(Parser.java:3093)
+	at org.h2.command.Parser.parseSelectExpressions(Parser.java:2893)
+	at org.h2.command.Parser.parseSelect(Parser.java:2910)
+	at org.h2.command.Parser.parseQueryPrimary(Parser.java:2800)
+	at org.h2.command.Parser.parseQueryTerm(Parser.java:2667)
+	at org.h2.command.Parser.parseQueryExpressionBody(Parser.java:2646)
+	at org.h2.command.Parser.parseQueryExpressionBodyAndEndOfQuery(Parser.java:2639)
+	at org.h2.command.Parser.parseQueryExpression(Parser.java:2632)
+	at org.h2.command.Parser.parseQuery(Parser.java:2593)
+	at org.h2.command.Parser.parsePrepared(Parser.java:724)
+	at org.h2.command.Parser.parse(Parser.java:691)
+	at org.h2.command.Parser.parse(Parser.java:661)
+	at org.h2.command.Parser.prepareCommand(Parser.java:568)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:631)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:554)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1116)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:237)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-06-04 16:00:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Scalar subquery contains more than one row; SQL statement:
+SELECT p.id,
+       (YEAR(p.finish_date) - YEAR(p.start_date)) * 12 + (MONTH(p.finish_date) - MONTH(p.start_date)) AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING (YEAR(p.finish_date) - YEAR(p.start_date)) * 12 + (MONTH(p.finish_date) - MONTH(p.start_date)) = (
+  SELECT (YEAR(p2.finish_date) - YEAR(p2.start_date)) * 12 + (MONTH(p2.finish_date) - MONTH(p2.start_date))
+  FROM projects p2
+) [90053-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:646)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.expression.Subquery.getValue(Subquery.java:53)
+	at org.h2.expression.condition.Comparison.getValue(Comparison.java:222)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-06-04 16:06:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Function "PERIOD_DIFF" not found; SQL statement:
+SELECT p.id,
+       PERIOD_DIFF(DATE_FORMAT(p.finish_date, '%Y%m'), DATE_FORMAT(p.start_date, '%Y%m')) AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING PERIOD_DIFF(DATE_FORMAT(p.finish_date, '%Y%m'), DATE_FORMAT(p.start_date, '%Y%m')) = (
+  SELECT PERIOD_DIFF(DATE_FORMAT(p2.finish_date, '%Y%m'), DATE_FORMAT(p2.start_date, '%Y%m'))
+  FROM projects p2
+) [90022-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.Parser.readFunction(Parser.java:3894)
+	at org.h2.command.Parser.readTerm(Parser.java:5227)
+	at org.h2.command.Parser.readFactor(Parser.java:3440)
+	at org.h2.command.Parser.readSum(Parser.java:3427)
+	at org.h2.command.Parser.readConcat(Parser.java:3392)
+	at org.h2.command.Parser.readCondition(Parser.java:3177)
+	at org.h2.command.Parser.readExpression(Parser.java:3093)
+	at org.h2.command.Parser.parseSelectExpressions(Parser.java:2893)
+	at org.h2.command.Parser.parseSelect(Parser.java:2910)
+	at org.h2.command.Parser.parseQueryPrimary(Parser.java:2800)
+	at org.h2.command.Parser.parseQueryTerm(Parser.java:2667)
+	at org.h2.command.Parser.parseQueryExpressionBody(Parser.java:2646)
+	at org.h2.command.Parser.parseQueryExpressionBodyAndEndOfQuery(Parser.java:2639)
+	at org.h2.command.Parser.parseQueryExpression(Parser.java:2632)
+	at org.h2.command.Parser.parseQuery(Parser.java:2593)
+	at org.h2.command.Parser.parsePrepared(Parser.java:724)
+	at org.h2.command.Parser.parse(Parser.java:691)
+	at org.h2.command.Parser.parse(Parser.java:661)
+	at org.h2.command.Parser.prepareCommand(Parser.java:568)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:631)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:554)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1116)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:237)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-06-04 16:13:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Invalid value "P" for parameter "date-time field"; SQL statement:
+SELECT p.id,
+       FLOOR(DATEDIFF(p.finish_date, p.start_date) / 30) AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING FLOOR(DATEDIFF(p.finish_date, p.start_date) / 30) = (
+  SELECT FLOOR(DATEDIFF(p2.finish_date, p2.start_date) / 30)
+  FROM projects p2
+) [90008-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:646)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.getInvalidValueException(DbException.java:298)
+	at org.h2.expression.function.DateTimeFunction.getField(DateTimeFunction.java:321)
+	at org.h2.command.Parser.readDateTimeField(Parser.java:4651)
+	at org.h2.command.Parser.readBuiltinFunctionIf(Parser.java:4218)
+	at org.h2.command.Parser.readFunction(Parser.java:3876)
+	at org.h2.command.Parser.readTerm(Parser.java:5227)
+	at org.h2.command.Parser.readFactor(Parser.java:3440)
+	at org.h2.command.Parser.readSum(Parser.java:3427)
+	at org.h2.command.Parser.readConcat(Parser.java:3392)
+	at org.h2.command.Parser.readCondition(Parser.java:3177)
+	at org.h2.command.Parser.readExpression(Parser.java:3093)
+	at org.h2.command.Parser.readSingleArgument(Parser.java:4558)
+	at org.h2.command.Parser.readBuiltinFunctionIf(Parser.java:4158)
+	at org.h2.command.Parser.readFunction(Parser.java:3876)
+	at org.h2.command.Parser.readTerm(Parser.java:5227)
+	at org.h2.command.Parser.readFactor(Parser.java:3440)
+	at org.h2.command.Parser.readSum(Parser.java:3427)
+	at org.h2.command.Parser.readConcat(Parser.java:3392)
+	at org.h2.command.Parser.readCondition(Parser.java:3177)
+	at org.h2.command.Parser.readExpression(Parser.java:3093)
+	at org.h2.command.Parser.parseSelectExpressions(Parser.java:2893)
+	at org.h2.command.Parser.parseSelect(Parser.java:2910)
+	at org.h2.command.Parser.parseQueryPrimary(Parser.java:2800)
+	at org.h2.command.Parser.parseQueryTerm(Parser.java:2667)
+	at org.h2.command.Parser.parseQueryExpressionBody(Parser.java:2646)
+	at org.h2.command.Parser.parseQueryExpressionBodyAndEndOfQuery(Parser.java:2639)
+	at org.h2.command.Parser.parseQueryExpression(Parser.java:2632)
+	at org.h2.command.Parser.parseQuery(Parser.java:2593)
+	at org.h2.command.Parser.parsePrepared(Parser.java:724)
+	at org.h2.command.Parser.parse(Parser.java:691)
+	at org.h2.command.Parser.parse(Parser.java:661)
+	at org.h2.command.Parser.prepareCommand(Parser.java:568)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:631)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:554)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1116)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:237)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-06-04 19:01:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, max(p.finish_date - p.start_date)*12/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, max(p.finish_date - p.start_date)*12/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:02:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:03:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:03:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:03:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:03:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:03:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:03:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:03:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:04:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)*12)/365  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:04:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT p.id, (max(p.finish_date - p.start_date)/365)  AS MONTH_COUNT from projects p
+GROUP BY p.id
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:07:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+select p.id, max(p.finish_date - p.start_date)*12/365  as MONTH_COUNT from projects p
+group by p.id 
+having max(p.finish_date - p.start_date) = (select max(p2.finish_date - p2.start_date ) from projects p2) [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.createGroupSortedRow(Select.java:334)
+	at org.h2.command.query.Select$LazyResultGroupSorted.fetchNextRow(Select.java:1901)
+	at org.h2.result.LazyResult.hasNext(LazyResult.java:78)
+	at org.h2.result.FetchedResult.next(FetchedResult.java:34)
+	at org.h2.command.query.Select.queryGroupSorted(Select.java:320)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:826)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:09:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, max(DATEDIFF('month', p.start_date, p.finish_date) [*]AS MONTH_COUNT\000d\000aFROM projects p\000d\000aGROUP BY p.id\000d\000aHAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (\000d\000a  SELECT max(DATEDIFF('day', p2.start_date, p2.finish_date))\000d\000a  FROM projects p2\000d\000a)"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, )"; SQL statement:
+SELECT p.id, max(DATEDIFF('month', p.start_date, p.finish_date) AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (
+  SELECT max(DATEDIFF('day', p2.start_date, p2.finish_date))
+  FROM projects p2
+) [42001-212]
+2023-06-04 19:13:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, (max(DATEDIFF('year', p.start_date, p.finish_date))*12)/365 AS MONTH_COUNT\000d\000aFROM projects p\000d\000aGROUP BY p.id\000d\000aHAVING max( p.start_date[*], p.finish_date) = (\000d\000a  SELECT max(p2.start_date, p2.finish_date)\000d\000a  FROM projects p2\000d\000a)"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, )"; SQL statement:
+SELECT p.id, (max(DATEDIFF('year', p.start_date, p.finish_date))*12)/365 AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max( p.start_date, p.finish_date) = (
+  SELECT max(p2.start_date, p2.finish_date)
+  FROM projects p2
+) [42001-212]
+2023-06-04 19:16:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, max(DATEDIFF('day', p.start_date, p.finish_date)  [*]AS MONTH_COUNT\000d\000aFROM projects p\000d\000aGROUP BY p.id\000d\000aHAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (\000d\000a  SELECT max(DATEDIFF('day', p2.start_date, p2.finish_date))\000d\000a  FROM projects p2\000d\000a)"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, )"; SQL statement:
+SELECT p.id, max(DATEDIFF('day', p.start_date, p.finish_date)  AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (
+  SELECT max(DATEDIFF('day', p2.start_date, p2.finish_date))
+  FROM projects p2
+) [42001-212]
+2023-06-04 19:19:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT\000d\000aFROM projects p\000d\000aGROUP BY p.id\000d\000aHAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (\000d\000a  SELECT max(DATEDIFF('day[*]', p2.start_date, p2.finish_date))\000d\000a  FROM projects p2\000d\000a);"; SQL statement:
+SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max(DATEDIFF('day', p.start_date, p.finish_date)) = (
+  SELECT max(DATEDIFF('day', p2.start_date, p2.finish_date))
+  FROM projects p2
+); [42000-212]
+2023-06-04 19:19:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT\000d\000aFROM projects p\000d\000aGROUP BY p.id\000d\000aHAVING max(DATEDIFF('year', p.start_date, p.finish_date)) = (\000d\000a  SELECT max(DATEDIFF('year[*]', p2.start_date, p2.finish_date))\000d\000a  FROM projects p2\000d\000a);"; SQL statement:
+SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max(DATEDIFF('year', p.start_date, p.finish_date)) = (
+  SELECT max(DATEDIFF('year', p2.start_date, p2.finish_date))
+  FROM projects p2
+); [42000-212]
+2023-06-04 19:19:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT\000d\000aFROM projects p\000d\000aGROUP BY p.id\000d\000aHAVING max(DATEDIFF('year', p.start_date, p.finish_date)) = (\000d\000a  SELECT max(DATEDIFF('year[*]', p2.start_date, p2.finish_date))\000d\000a  FROM projects p2\000d\000a);"; SQL statement:
+SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max(DATEDIFF('year', p.start_date, p.finish_date)) = (
+  SELECT max(DATEDIFF('year', p2.start_date, p2.finish_date))
+  FROM projects p2
+); [42000-212]
+2023-06-04 19:19:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT\000d\000aFROM projects p\000d\000aGROUP BY p.id\000d\000aHAVING max(DATEDIFF('year', p.start_date, p.finish_date)) = (\000d\000a  SELECT max(DATEDIFF('year[*]', p2.start_date, p2.finish_date))\000d\000a  FROM projects p2\000d\000a);"; SQL statement:
+SELECT p.id, max(DATEDIFF(year', p.start_date, p.finish_date))  AS MONTH_COUNT
+FROM projects p
+GROUP BY p.id
+HAVING max(DATEDIFF('year', p.start_date, p.finish_date)) = (
+  SELECT max(DATEDIFF('year', p2.start_date, p2.finish_date))
+  FROM projects p2
+); [42000-212]
+2023-06-04 19:41:41 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:125)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:3318)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:593)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:469)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:4082)
+	at org.h2.mvstore.db.Store.<init>(Store.java:136)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:681)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:252)
+	at org.example.Database.<init>(H2Database.java:17)
+	at org.example.Database.<clinit>(H2Database.java:7)
+	at org.example.DatabaseQueryService.<clinit>(DatabaseQueryService.java:14)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	... 20 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
+	at org.h2.mvstore.FileStore.open(FileStore.java:178)
+	at org.h2.mvstore.FileStore.open(FileStore.java:128)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
+	... 14 more
+2023-06-04 19:50:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT pw.project_id, (SUM(w.salary) * (p.finish_date - p.start_date) * 12 / 365) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.processGroupResult(Select.java:547)
+	at org.h2.command.query.Select.queryGroup(Select.java:489)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:828)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 19:52:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id, (SUM(w.salary) *    DATEDIFF('MONTH', p.finish_date - p.start_date[*])  as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,"; SQL statement:
+SELECT pw.project_id, (SUM(w.salary) *    DATEDIFF('MONTH', p.finish_date - p.start_date)  as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 19:52:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id, (SUM(w.salary) *    DATEDIFF('MONTH', p.finish_date - p.start_date[*]))  as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,"; SQL statement:
+SELECT pw.project_id, (SUM(w.salary) *    DATEDIFF('MONTH', p.finish_date - p.start_date))  as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 19:53:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id, (SUM(w.salary) * DATEDIFF('MONTH', p.finish_date - p.start_date[*]))  as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,"; SQL statement:
+SELECT pw.project_id, (SUM(w.salary) * DATEDIFF('MONTH', p.finish_date - p.start_date))  as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 19:54:39 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id, SUM(w.salary) * DATEDIFF('MONTH', p.finish_date - p.start_date[*]) as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,"; SQL statement:
+SELECT pw.project_id, SUM(w.salary) * DATEDIFF('MONTH', p.finish_date - p.start_date) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 19:54:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id,  DATEDIFF('MONTH', p.finish_date - p.start_date[*]) as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,"; SQL statement:
+SELECT pw.project_id,  DATEDIFF('MONTH', p.finish_date - p.start_date) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 19:54:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id,  DATEDIFF('MONTH', p.finish_date - p.start_date[*]) as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,"; SQL statement:
+SELECT pw.project_id,  DATEDIFF('MONTH', p.finish_date - p.start_date) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 19:55:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id, DATEDIFF('MONTH', p.finish_date - p.start_date[*]) as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "(, ., [, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,"; SQL statement:
+SELECT pw.project_id, DATEDIFF('MONTH', p.finish_date - p.start_date) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 20:36:57 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:125)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:3318)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:593)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:469)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:4082)
+	at org.h2.mvstore.db.Store.<init>(Store.java:136)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:681)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:252)
+	at org.example.Database.<init>(H2Database.java:17)
+	at org.example.Database.<clinit>(H2Database.java:7)
+	at org.example.DatabaseQueryService.<clinit>(DatabaseQueryService.java:14)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	... 20 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
+	at org.h2.mvstore.FileStore.open(FileStore.java:178)
+	at org.h2.mvstore.FileStore.open(FileStore.java:128)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
+	... 14 more
+2023-06-04 20:37:05 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:125)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:3318)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:593)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:469)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:4082)
+	at org.h2.mvstore.db.Store.<init>(Store.java:136)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:681)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:252)
+	at org.example.Database.<init>(H2Database.java:17)
+	at org.example.Database.<clinit>(H2Database.java:7)
+	at org.example.DatabaseQueryService.<clinit>(DatabaseQueryService.java:14)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	... 20 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
+	at org.h2.mvstore.FileStore.open(FileStore.java:178)
+	at org.h2.mvstore.FileStore.open(FileStore.java:128)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
+	... 14 more
+2023-06-04 20:37:32 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:125)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:3318)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:593)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:469)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:4082)
+	at org.h2.mvstore.db.Store.<init>(Store.java:136)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:681)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:252)
+	at org.example.Database.<init>(H2Database.java:17)
+	at org.example.Database.<clinit>(H2Database.java:7)
+	at org.example.DatabaseQueryService.<clinit>(DatabaseQueryService.java:14)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	... 20 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
+	at org.h2.mvstore.FileStore.open(FileStore.java:178)
+	at org.h2.mvstore.FileStore.open(FileStore.java:128)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
+	... 14 more
+2023-06-04 20:38:29 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:125)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:3318)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:593)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:469)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:4082)
+	at org.h2.mvstore.db.Store.<init>(Store.java:136)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:681)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:252)
+	at org.example.Database.<init>(H2Database.java:17)
+	at org.example.Database.<clinit>(H2Database.java:7)
+	at org.example.DatabaseQueryService.<clinit>(DatabaseQueryService.java:14)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	... 20 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
+	at org.h2.mvstore.FileStore.open(FileStore.java:178)
+	at org.h2.mvstore.FileStore.open(FileStore.java:128)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
+	... 14 more
+2023-06-04 20:41:31 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT pw.project_id, (SUM(w.salary) * (p.finish_date - p.start_date) * 12 / 365) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:99)
+	at org.example.DatabaseQueryService.projectPricesMethod(DatabaseQueryService.java:61)
+	at org.example.DatabaseQueryService.main(DatabaseQueryService.java:40)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.processGroupResult(Select.java:547)
+	at org.h2.command.query.Select.queryGroup(Select.java:489)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:828)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:251)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 3 more
+2023-06-04 20:41:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result."; SQL statement:
+SELECT pw.project_id, (SUM(w.salary) * (p.finish_date - p.start_date) * 12 / 365) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [50000-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.command.Command.executeQuery(Command.java:211)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:247)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
+	at java.base/java.math.BigDecimal.divide(BigDecimal.java:1766)
+	at org.h2.expression.IntervalOperation.getValue(IntervalOperation.java:226)
+	at org.h2.expression.Alias.getValue(Alias.java:37)
+	at org.h2.command.query.Select.constructGroupResultRow(Select.java:580)
+	at org.h2.command.query.Select.processGroupResult(Select.java:547)
+	at org.h2.command.query.Select.queryGroup(Select.java:489)
+	at org.h2.command.query.Select.queryWithoutCache(Select.java:828)
+	at org.h2.command.query.Query.queryWithoutCacheLazyCheck(Query.java:197)
+	at org.h2.command.query.Query.query(Query.java:512)
+	at org.h2.command.query.Query.query(Query.java:475)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:256)
+	at org.h2.command.Command.executeQuery(Command.java:190)
+	... 9 more
+2023-06-04 20:42:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT pw.project_id, (SUM(w.salary) *  DATEDIFF('MONTH', p.start_date, finish_date) [*]as price\000d\000aFROM project_worker pw\000d\000aJOIN workers w ON pw.worker_id = w.id\000d\000aJOIN projects p ON pw.project_id = p.id\000d\000aGROUP BY pw.project_id, p.finish_date, p.start_date\000d\000aORDER BY price DESC"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+SELECT pw.project_id, (SUM(w.salary) *  DATEDIFF('MONTH', p.start_date, finish_date) as price
+FROM project_worker pw
+JOIN workers w ON pw.worker_id = w.id
+JOIN projects p ON pw.project_id = p.id
+GROUP BY pw.project_id, p.finish_date, p.start_date
+ORDER BY price DESC [42001-212]
+2023-06-04 20:43:20 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:125)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:3318)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:593)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:469)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:4082)
+	at org.h2.mvstore.db.Store.<init>(Store.java:136)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:681)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:252)
+	at org.example.Database.<init>(H2Database.java:17)
+	at org.example.Database.<clinit>(H2Database.java:7)
+	at org.example.DatabaseQueryService.<clinit>(DatabaseQueryService.java:14)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	... 20 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
+	at org.h2.mvstore.FileStore.open(FileStore.java:178)
+	at org.h2.mvstore.FileStore.open(FileStore.java:128)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
+	... 14 more
+2023-06-04 20:43:27 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "projectId" not found [42122-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.jdbc.JdbcResultSet.getColumnIndex(JdbcResultSet.java:3518)
+	at org.h2.jdbc.JdbcResultSet.getInt(JdbcResultSet.java:337)
+	at org.example.DatabaseQueryService.projectPricesMethod(DatabaseQueryService.java:64)
+	at org.example.DatabaseQueryService.main(DatabaseQueryService.java:40)
+2023-06-04 20:44:55 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:395)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:125)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:3318)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:593)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:469)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:4082)
+	at org.h2.mvstore.db.Store.<init>(Store.java:136)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:681)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:252)
+	at org.example.Database.<init>(H2Database.java:17)
+	at org.example.Database.<clinit>(H2Database.java:7)
+	at org.example.DatabaseQueryService.<clinit>(DatabaseQueryService.java:14)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]" [50000-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	... 20 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/admin/IdeaProjects/NEWJdbcproject/test.mv.db [2.1.214/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
+	at org.h2.mvstore.FileStore.open(FileStore.java:178)
+	at org.h2.mvstore.FileStore.open(FileStore.java:128)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
+	... 14 more
